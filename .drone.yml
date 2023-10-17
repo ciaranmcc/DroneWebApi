@@ -1,19 +1,40 @@
----
+
 kind: pipeline
-type: kubernetes
+type: docker
 name: default
 
-# remove this section if your CPU is amd64 correct
-platform:
-  os: linux
-  arch: arm64
-
 steps:
-- name: hello
-  image: busybox
-  commands:
-  - echo hello world
+  - name: build
+    image: docker:stable
+    commands:
+      - docker build -t ciaranmccamphill/drone_web_api:latest .
+  - name: publish
+    image: plugins/docker
+    settings:
+      registry: registry.hub.docker.com
+      repo: ciaranmccamphill/drone_web_api
+      username: ciaran.mccamphill@yahoo.com
+      password: Manunited10
+      auto_tag: true
+
+
+
+#---
+# kind: pipeline
+# type: kubernetes
+# name: default
+
+## remove this section if your CPU is amd64 correct
+# platform:
+  # os: linux
+  # arch: arm64
+
+# steps:
+# - name: hello
+#   image: busybox
+#   commands:
+#   - echo hello world
  
-trigger:
-  branch:
-  - main
+# trigger:
+#   branch:
+#   - main
