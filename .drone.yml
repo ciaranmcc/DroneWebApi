@@ -1,11 +1,14 @@
 
 kind: pipeline
-type: kubernetes
+type: docker
 name: default
 
 steps:
   - name: build
     image: docker:stable
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
     commands:
       - docker build -t ciaranmccamphill/drone_web_api:latest .
   - name: publish
@@ -16,6 +19,11 @@ steps:
       username: ciaran.mccamphill@yahoo.com
       password: Manunited10
       auto_tag: true
+
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
 
 
 
