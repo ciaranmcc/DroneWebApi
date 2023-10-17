@@ -1,14 +1,12 @@
-
 kind: pipeline
 type: kubernetes
 name: default
 
 steps:
   - name: build
-    image: docker:stable
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
+    image: docker:stable-dind
+    environment:
+      DOCKER_HOST: tcp://localhost:2375  # Use the Docker-in-Docker service
     commands:
       - docker build -t ciaranmccamphill/drone_web_api:latest .
   - name: publish
@@ -20,10 +18,6 @@ steps:
       password: Manunited10
       auto_tag: true
 
-volumes:
-  - name: dockersock
-    host:
-      path: /var/run/docker.sock
 
 
 
