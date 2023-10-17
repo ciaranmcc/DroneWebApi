@@ -1,4 +1,4 @@
-# Use the .NET SDK image to build the application - minor update
+# Use the .NET SDK image to build the application
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
