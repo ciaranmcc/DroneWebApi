@@ -4,17 +4,24 @@ name: default
 
 steps:
   - name: build
-    image: docker:20.10
+    image: mcr.microsoft.com/dotnet/sdk:7.0
     commands:
-      - docker build -t ciaranmccamphill/drone_web_api:latest .
+      - dotnet restore
+      - dotnet build --configuration Release
+      - dotnet publish --configuration Release --output ./app
+  - name: build_docker
+    image: docker:stable
+    commands:
+      - docker build -t ciaranmccamphill/dronewebapi:latest .
   - name: publish
     image: plugins/docker
     settings:
       registry: registry.hub.docker.com
-      repo: ciaranmccamphill/drone_web_api
+      repo: ciaranmccamphill/DroneWebApi
+      tags: [ latest ]
       username: ciaran.mccamphill@yahoo.com
       password: Manunited10
-      auto_tag: true
+
 
 
 
