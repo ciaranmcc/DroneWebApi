@@ -11,7 +11,6 @@ steps:
       - dotnet publish --configuration Release --output ./app
   - name: build_docker
     image: docker:stable
-    privileged: true
     commands:
       - dockerd-entrypoint.sh &  # Start the Docker daemon
       - sleep 20  # Wait for the Docker daemon to start
