@@ -4,9 +4,7 @@ name: default
 
 steps:
   - name: build
-    image: docker:stable-dind
-    environment:
-      DOCKER_HOST: tcp://localhost:2375  # Use the Docker-in-Docker service
+    image: docker:20.10
     commands:
       - docker build -t ciaranmccamphill/drone_web_api:latest .
   - name: publish
@@ -17,6 +15,7 @@ steps:
       username: ciaran.mccamphill@yahoo.com
       password: Manunited10
       auto_tag: true
+
 
 
 
